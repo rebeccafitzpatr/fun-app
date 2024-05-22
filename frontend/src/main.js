@@ -1,24 +1,17 @@
-import Vue from "vue";
+// Code to initialize the Auth0 SDK and Vue app
+import { createApp } from "vue";
 import App from "./App.vue";
-import router from "./router";
-import { domain, clientId } from "../../auth_config.json";
-import { Auth0Plugin } from "./auth";
+//import router from "./router";
+import { createAuth0 } from "@auth0/auth0-spa-js";
 
-Vue.use(Auth0Plugin, {
-  domain,
-  clientId,
-  onRedirectCallback: (appState) => {
-    router.push(
-      appState && appState.targetUrl
-        ? appState.targetUrl
-        : window.location.pathname
-    );
-  },
-});
-
-Vue.config.productionTip = false;
-
-new Vue({
-  router,
-  render: (h) => h(App),
-}).$mount("#app");
+createApp(App)
+  .use(
+    createAuth0({
+      domain: "dev-7tv7wp8kdujo6pmq.us.auth0.com",
+      clientId: "klbX6xuvUxHqkWNhQbIqyIrQArC4eWBj",
+      authorizationParams: {
+        redirect_uri: window.location.origin,
+      },
+    })
+  )
+  .mount("#app");

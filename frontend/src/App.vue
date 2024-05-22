@@ -19,15 +19,17 @@
 </template>
 
 <script>
+import { useAuth0 } from "@auth0/auth0-spa-js";
+
 export default {
-  name: "App",
-  methods: {
-    login() {
-      this.$auth.loginWithRedirect();
-    },
-    loginPopup() {
-      this.$auth.loginWithPopup();
-    },
+  setup() {
+    const { loginWithRedirect } = useAuth0();
+
+    return {
+      login: () => {
+        loginWithRedirect();
+      },
+    };
   },
 };
 </script>
@@ -41,7 +43,7 @@ export default {
   color: #2c3e50;
 }
 
-nav {
+#nav {
   display: flex;
   justify-content: center;
   padding: 30px;
